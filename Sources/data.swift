@@ -21,11 +21,14 @@ struct Branch {
 extension Repo: CustomStringConvertible {
 
 	var description: String {
-		let lines = (termsize?.cols ?? 24) - 1
+		let rows = (termsize?.rows ?? 24) - 1
+		let cols = (termsize?.cols ?? 48)
 		let changesCount = changes.count
 		let chs = changesCount > 0 ? ["+ \(changesCount) unrecorded changes"] : []
-		let all = chs + tree + (0..<max(0, lines - tree.count - chs.count)).map { _ in "-" }
-		return all.prefix(lines).joined(separator: "\n")
+		let all = chs + tree + (0..<max(0, rows - tree.count - chs.count)).map { _ in "-" }
+		return all.prefix(rows)
+			.map { line in line.prefix(cols) }
+			.joined(separator: "\n")
 	}
 }
 

@@ -1,7 +1,7 @@
 import Darwin
 import Foundation
 
-var termsize: (rows: Int, cols: Int)? {
+var termsize: (cols: Int, rows: Int)? {
 	var w = winsize()
 	let r = ioctl(STDOUT_FILENO, TIOCGWINSZ, &w)
 	return r != 0 || w.ws_col == 0 || w.ws_row == 0 ? nil : (Int(w.ws_col), Int(w.ws_row))
